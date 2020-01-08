@@ -1,5 +1,5 @@
 ## React + React Hooks + Typescript + Styled Components를 이용한 Todolist
 
-- 투두 추가
-- 투두 수정
-- 투두 제거
+- Todo 추가
+- Todo 수정
+- Todo 제거
