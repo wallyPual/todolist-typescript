@@ -91,7 +91,6 @@ function Todo() {
       <Title>오늘 {getToday()}</Title>
       <Contents>
         {todoList.length > 0 &&
-          todoList !== [] &&
           todoList.map((todo: TTodo, index: number) => (
             <TodoItem
               {...todo}
