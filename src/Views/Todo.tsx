@@ -38,7 +38,6 @@ type ITodo = {
   id: number;
   title: string;
   done: boolean;
-  edit: boolean;
 };
 
 function Todo() {
@@ -54,32 +53,34 @@ function Todo() {
       1}월 ${today.getDate()}일`;
   };
 
-  const handleSubmit = (e: FormEvent): void => {
-    e.preventDefault();
-    setTodoList(prev => [
-      ...prev,
-      { id: uniqId, title: value, done: false, edit: false }
-    ]);
-    setValue('');
-    setUniqId(prev => prev + 1);
+  const addTodo = (text: string): void => {
+    const newTodo: ITodo[] = [
+      ...todoList,
+      { id: uniqId, title: value, done: false }
+    ];
+    setTodoList(newTodo);
   };
 
   const editTodo = (id: number, title: string): void => {
-    const newTodo = todoList.map(todo => {
+    const newTodo: ITodo[] = todoList.map(todo => {
       if (todo.id === id) {
         todo.title = title;
       }
       return todo;
     });
-    console.log({ id, title, newTodo });
     setTodoList(newTodo);
   };
 
   const deleteTodo = (id: number): void => {
     const newTodo = todoList.filter(todo => todo.id !== id);
-    console.log({ id });
-    console.log({ newTodo });
     setTodoList(newTodo);
+  };
+
+  const handleSubmit = (e: FormEvent): void => {
+    e.preventDefault();
+    addTodo(value);
+    setValue('');
+    setUniqId(prev => prev + 1);
   };
 
   return (

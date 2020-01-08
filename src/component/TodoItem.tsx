@@ -1,10 +1,4 @@
-import React, {
-  MouseEvent,
-  FormEvent,
-  useState,
-  useRef,
-  useEffect
-} from 'react';
+import React, { MouseEvent, FormEvent, useState, useRef } from 'react';
 import styled from 'styled-components';
 
 type StyledContainerProps = {
@@ -23,7 +17,6 @@ type TodoItem = {
   id: number;
   title: string;
   done: boolean;
-  edit: boolean;
   editTodo: Function;
   deleteTodo: Function;
 };
@@ -81,7 +74,7 @@ const Button = styled.button`
   color: blue;
 `;
 
-function TodoItem({ id, title, done, edit, editTodo, deleteTodo }: TodoItem) {
+function TodoItem({ id, title, done, editTodo, deleteTodo }: TodoItem) {
   const [sedit, setSedit] = useState<boolean>(false);
   const [editText, setEditText] = useState<string>(title);
 
@@ -103,14 +96,6 @@ function TodoItem({ id, title, done, edit, editTodo, deleteTodo }: TodoItem) {
   const handleInput = (e: FormEvent<HTMLInputElement>): void => {
     setEditText(e.currentTarget.value);
   };
-
-  useEffect(() => {
-    const { current } = inputEl;
-
-    if (sedit && current !== null) {
-      current.focus();
-    }
-  }, []);
 
   return (
     <Container isActive={done}>
