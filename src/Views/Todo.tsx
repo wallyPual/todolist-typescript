@@ -34,14 +34,14 @@ const Input = styled.input`
   }
 `;
 
-type ITodo = {
+type TTodo = {
   id: number;
   title: string;
   done: boolean;
 };
 
 function Todo() {
-  const [todoList, setTodoList] = useState<ITodo[]>([]);
+  const [todoList, setTodoList] = useState<TTodo[]>([]);
   const [value, setValue] = useState<string>('');
   const [uniqId, setUniqId] = useState<number>(0);
 
@@ -53,8 +53,8 @@ function Todo() {
       1}월 ${today.getDate()}일`;
   };
 
-  const addTodo = (text: string): void => {
-    const newTodo: ITodo[] = [
+  const addTodo = (): void => {
+    const newTodo: TTodo[] = [
       ...todoList,
       { id: uniqId, title: value, done: false }
     ];
@@ -62,7 +62,7 @@ function Todo() {
   };
 
   const editTodo = (id: number, title: string): void => {
-    const newTodo: ITodo[] = todoList.map(todo => {
+    const newTodo: TTodo[] = todoList.map(todo => {
       if (todo.id === id) {
         todo.title = title;
       }
@@ -78,7 +78,7 @@ function Todo() {
 
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    addTodo(value);
+    addTodo();
     setValue('');
     setUniqId(prev => prev + 1);
   };
@@ -89,7 +89,7 @@ function Todo() {
       <Contents>
         {todoList.length > 0 &&
           todoList !== [] &&
-          todoList.map((todo, index) => (
+          todoList.map((todo: TTodo, index: number) => (
             <TodoItem
               {...todo}
               editTodo={editTodo}

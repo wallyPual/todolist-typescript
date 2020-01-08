@@ -1,15 +1,15 @@
 import React, { MouseEvent, FormEvent, useState, useRef } from 'react';
 import styled from 'styled-components';
 
-type StyledContainerProps = {
+type TStyledContainer = {
   isActive: boolean;
 };
 
-type StyledColumnProps = {
+type TStyledColumn = {
   last?: boolean;
 };
 
-type StyledInputProps = {
+type TStyledInput = {
   isActive: boolean;
 };
 
@@ -21,7 +21,7 @@ type TodoItem = {
   deleteTodo: Function;
 };
 
-const Container = styled.div<StyledContainerProps>`
+const Container = styled.div<TStyledContainer>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,7 +37,7 @@ const Container = styled.div<StyledContainerProps>`
   `}
 `;
 
-const Column = styled.div<StyledColumnProps>`
+const Column = styled.div<TStyledColumn>`
   padding: 0 0 0 10px;
   width: 90%;
   ${props =>
@@ -51,7 +51,7 @@ const Column = styled.div<StyledColumnProps>`
 
 const Title = styled.span``;
 
-const Input = styled.input<StyledInputProps>`
+const Input = styled.input<TStyledInput>`
   ${props => props.theme.resetInput}
   position: absolute;
   top: -200%;
