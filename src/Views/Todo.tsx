@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useCallback, FormEvent } from 'react';
 import styled from 'styled-components';
 import TodoItem from '../component/TodoItem';
 import { IoIosAdd } from 'react-icons/io';
@@ -53,13 +53,13 @@ function Todo() {
       1}월 ${today.getDate()}일`;
   };
 
-  const addTodo = (): void => {
+  const addTodo = useCallback((): void => {
     const newTodo: TTodo[] = [
       ...todoList,
       { id: uniqId, title: value, done: false }
     ];
     setTodoList(newTodo);
-  };
+  }, [todoList, uniqId, value]);
 
   const editTodo = (id: number, title: string): void => {
     const newTodo: TTodo[] = todoList.map(todo => {
@@ -76,12 +76,15 @@ function Todo() {
     setTodoList(newTodo);
   };
 
-  const handleSubmit = (e: FormEvent): void => {
-    e.preventDefault();
-    addTodo();
-    setValue('');
-    setUniqId(prev => prev + 1);
-  };
+  const handleSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>): void => {
+      e.preventDefault();
+      addTodo();
+      setValue('');
+      setUniqId(prev => prev + 1);
+    },
+    [addTodo]
+  );
 
   return (
     <Container>

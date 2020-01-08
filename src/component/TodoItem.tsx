@@ -1,4 +1,10 @@
-import React, { MouseEvent, FormEvent, useState, useRef } from 'react';
+import React, {
+  MouseEvent,
+  FormEvent,
+  useState,
+  useRef,
+  useCallback
+} from 'react';
 import styled from 'styled-components';
 
 type TStyledContainer = {
@@ -93,9 +99,9 @@ function TodoItem({ id, title, done, editTodo, deleteTodo }: TodoItem) {
     setSedit(prev => !prev);
   };
 
-  const handleInput = (e: FormEvent<HTMLInputElement>): void => {
+  const handleInput = useCallback((e: FormEvent<HTMLInputElement>): void => {
     setEditText(e.currentTarget.value);
-  };
+  }, []);
 
   return (
     <Container isActive={done}>
