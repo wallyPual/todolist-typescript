@@ -6,6 +6,8 @@ import React, {
   useCallback
 } from 'react';
 import styled from 'styled-components';
+import { IoMdCreate, IoIosTrash } from 'react-icons/io';
+import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 
 type TStyledContainer = {
   isActive: boolean;
@@ -25,6 +27,7 @@ type TodoItem = {
   done: boolean;
   editTodo: Function;
   deleteTodo: Function;
+  checkTodo: Function;
 };
 
 const Container = styled.div<TStyledContainer>`
@@ -44,6 +47,8 @@ const Container = styled.div<TStyledContainer>`
 `;
 
 const Column = styled.div<TStyledColumn>`
+  display: flex;
+  align-items: center;
   padding: 0 0 0 10px;
   width: 90%;
   ${props =>
@@ -74,13 +79,35 @@ const Input = styled.input<TStyledInput>`
   `}
 `;
 
-const Button = styled.button`
-  ${props => props.theme.resetButton}
-  font-size: 15px;
-  color: blue;
+const CompleteButton = styled.button`
+  ${props => props.theme.resetButton};
+  margin-right: 10px;
+  outline: none;
+  color: #019cdc;
 `;
 
-function TodoItem({ id, title, done, editTodo, deleteTodo }: TodoItem) {
+const EditButton = styled.button`
+  ${props => props.theme.resetButton}
+  padding: 0 8px;
+  font-size: 15px;
+  color: #019cdc;
+`;
+
+const DeleteButton = styled.button`
+  ${props => props.theme.resetButton}
+  padding: 0 8px;
+  font-size: 15px;
+  color: #eb2822;
+`;
+
+function TodoItem({
+  id,
+  title,
+  done,
+  editTodo,
+  deleteTodo,
+  checkTodo
+}: TodoItem) {
   const [sedit, setSedit] = useState<boolean>(false);
   const [editText, setEditText] = useState<string>(title);
 
@@ -113,16 +140,25 @@ function TodoItem({ id, title, done, editTodo, deleteTodo }: TodoItem) {
           isActive={sedit}
           value={editText}
         />
+        {!sedit && (
+          <CompleteButton onClick={e => checkTodo(e, id)}>
+            {done ? <FaRegCheckCircle size={25} /> : <FaRegCircle size={25} />}
+          </CompleteButton>
+        )}
         {!sedit && <Title>{title}</Title>}
       </Column>
       <Column last={true}>
         {!done &&
           (sedit ? (
-            <Button onClick={editEnd}>수정완료</Button>
+            <EditButton onClick={editEnd}>done</EditButton>
           ) : (
             <div>
-              <Button onClick={editStart}>수정</Button>
-              <Button onClick={() => deleteTodo(id)}>제거</Button>
+              <EditButton onClick={editStart}>
+                <IoMdCreate />
+              </EditButton>
+              <DeleteButton onClick={() => deleteTodo(id)}>
+                <IoIosTrash />
+              </DeleteButton>
             </div>
           ))}
       </Column>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, FormEvent } from 'react';
+import React, { useState, useCallback, FormEvent, MouseEvent } from 'react';
 import styled from 'styled-components';
 import TodoItem from '../component/TodoItem';
 import { IoIosAdd } from 'react-icons/io';
@@ -76,6 +76,21 @@ function Todo() {
     setTodoList(newTodo);
   };
 
+  const checkTodo = useCallback(
+    (e: MouseEvent<HTMLButtonElement>, id: number): void => {
+      e.preventDefault();
+      const newTodo: TTodo[] = todoList.map(todo => {
+        if (todo.id === id) {
+          todo.done = !todo.done;
+        }
+        return todo;
+      });
+
+      setTodoList(newTodo);
+    },
+    [todoList]
+  );
+
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>): void => {
       e.preventDefault();
@@ -96,6 +111,7 @@ function Todo() {
               {...todo}
               editTodo={editTodo}
               deleteTodo={deleteTodo}
+              checkTodo={checkTodo}
               key={index}
             />
           ))}

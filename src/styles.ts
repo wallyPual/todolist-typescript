@@ -2,6 +2,7 @@ import { DefaultTheme } from 'styled-components';
 
 const styles: DefaultTheme = {
   resetButton: `
+    padding: 0;
     border: none;
     background: none;
     color: #000;
