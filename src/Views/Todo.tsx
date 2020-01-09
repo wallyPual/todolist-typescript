@@ -1,4 +1,10 @@
-import React, { useState, useCallback, FormEvent, MouseEvent } from 'react';
+import React, {
+  useState,
+  useMemo,
+  useCallback,
+  FormEvent,
+  MouseEvent
+} from 'react';
 import styled from 'styled-components';
 import TodoItem from '../component/TodoItem';
 import { IoIosAdd } from 'react-icons/io';
@@ -52,6 +58,8 @@ function Todo() {
     return `${day[today.getDay() - 1]} ${today.getMonth() +
       1}월 ${today.getDate()}일`;
   }, []);
+
+  const today = useMemo(() => getToday(), [getToday]);
 
   const addTodo = useCallback((): void => {
     const newTodo: TTodo[] = [
@@ -109,7 +117,7 @@ function Todo() {
 
   return (
     <Container>
-      <Title>오늘 {getToday()}</Title>
+      <Title>오늘 {today}</Title>
       <Contents>
         {todoList.length > 0 &&
           todoList.map((todo: TTodo, index: number) => (

@@ -113,18 +113,21 @@ function TodoItem({
 
   const inputEl = useRef<HTMLInputElement>(null);
 
-  const editStart = (e: MouseEvent<HTMLButtonElement>): void => {
+  const editStart = useCallback((e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     setSedit(prev => !prev);
     if (inputEl.current === null) return;
     inputEl.current.focus();
-  };
+  }, []);
 
-  const editEnd = (e: MouseEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    editTodo(id, editText);
-    setSedit(prev => !prev);
-  };
+  const editEnd = useCallback(
+    (e: MouseEvent<HTMLButtonElement>): void => {
+      e.preventDefault();
+      editTodo(id, editText);
+      setSedit(prev => !prev);
+    },
+    [editText, editTodo, id]
+  );
 
   const handleInput = useCallback((e: FormEvent<HTMLInputElement>): void => {
     setEditText(e.currentTarget.value);
