@@ -45,13 +45,13 @@ function Todo() {
   const [value, setValue] = useState<string>('');
   const [uniqId, setUniqId] = useState<number>(0);
 
-  const getToday = (): string => {
+  const getToday = useCallback((): string => {
     const today = new Date();
     const day = ['월', '화', '수', '목', '금', '토', '일'];
 
     return `${day[today.getDay() - 1]} ${today.getMonth() +
       1}월 ${today.getDate()}일`;
-  };
+  }, []);
 
   const addTodo = useCallback((): void => {
     const newTodo: TTodo[] = [
