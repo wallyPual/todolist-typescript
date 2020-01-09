@@ -61,20 +61,26 @@ function Todo() {
     setTodoList(newTodo);
   }, [todoList, uniqId, value]);
 
-  const editTodo = (id: number, title: string): void => {
-    const newTodo: TTodo[] = todoList.map(todo => {
-      if (todo.id === id) {
-        todo.title = title;
-      }
-      return todo;
-    });
-    setTodoList(newTodo);
-  };
+  const editTodo = useCallback(
+    (id: number, title: string): void => {
+      const newTodo: TTodo[] = todoList.map(todo => {
+        if (todo.id === id) {
+          todo.title = title;
+        }
+        return todo;
+      });
+      setTodoList(newTodo);
+    },
+    [todoList]
+  );
 
-  const deleteTodo = (id: number): void => {
-    const newTodo = todoList.filter(todo => todo.id !== id);
-    setTodoList(newTodo);
-  };
+  const deleteTodo = useCallback(
+    (id: number): void => {
+      const newTodo = todoList.filter(todo => todo.id !== id);
+      setTodoList(newTodo);
+    },
+    [todoList]
+  );
 
   const checkTodo = useCallback(
     (e: MouseEvent<HTMLButtonElement>, id: number): void => {
